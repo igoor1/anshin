@@ -1,0 +1,44 @@
+package fatec.anshinpet.domain.model;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.util.Objects;
+
+@Entity
+@Getter
+@Setter
+public class Role {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Value name;
+
+    @Getter
+    public enum Value {
+        USER(new SimpleGrantedAuthority("USER")), ADMIN(new SimpleGrantedAuthority("ADMIN"));
+        private final SimpleGrantedAuthority authority;
+
+        Value(SimpleGrantedAuthority authority) {
+            this.authority = authority;
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Role role)) return false;
+        return Objects.equals(id, role.id) && name == role.name;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
+    }
+}
