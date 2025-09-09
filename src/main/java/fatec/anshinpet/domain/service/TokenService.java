@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -15,6 +16,7 @@ import static fatec.anshinpet.api.dto_mapper.ObjectMapper.parseObject;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class TokenService {
 
     private final JwtEncoder jwtEncoder;

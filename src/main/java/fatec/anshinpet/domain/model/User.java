@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -13,7 +15,10 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "\"user\"")
-public class User {
+public class User implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,10 +27,9 @@ public class User {
     @Column(unique = true)
     private String email;
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
-    @Column
     private String password;
 
     @ManyToMany
