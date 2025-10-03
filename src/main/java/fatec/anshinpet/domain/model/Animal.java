@@ -1,5 +1,6 @@
 package fatec.anshinpet.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,6 +30,9 @@ public class Animal {
 
     private LocalDate rescue_date;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Image image;
+
     @ManyToOne
     @JoinColumn(name = "status_id")
     private AnimalStatus animalStatus;
@@ -36,4 +40,5 @@ public class Animal {
     @ManyToOne
     @JoinColumn(name = "type_id")
     private AnimalType animalType;
+
 }

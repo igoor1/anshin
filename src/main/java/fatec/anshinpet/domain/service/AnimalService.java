@@ -6,6 +6,7 @@ import fatec.anshinpet.domain.exception.AnimalNotFoundException;
 import fatec.anshinpet.domain.model.Animal;
 import fatec.anshinpet.domain.model.AnimalStatus;
 import fatec.anshinpet.domain.model.AnimalType;
+import fatec.anshinpet.domain.model.Image;
 import fatec.anshinpet.domain.repository.AnimalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.InputStream;
 import java.util.List;
 
 import static fatec.anshinpet.api.dto_mapper.ObjectMapper.*;
@@ -26,6 +28,7 @@ public class AnimalService {
     private final AnimalRepository animalRepository;
     private final AnimalTypeService animalTypeService;
     private final AnimalStatusService animalStatusService;
+    private final ImageService imageService;
 
     public Page<AnimalDTO> findAll(Pageable pageable) {
         Page<Animal> animalPage = animalRepository.findAll(pageable);
@@ -57,7 +60,7 @@ public class AnimalService {
     }
 
     @Transactional
-    public AnimalDTO update (Long id, AnimalInput animal) {
+    public AnimalDTO update(Long id, AnimalInput animal) {
         Animal currentAnimal = findByIdOrException(id);
         AnimalType type = animalTypeService.findByIdOrException(animal.getType());
         AnimalStatus status = animalStatusService.findByIdOrException(animal.getStatus());
@@ -74,4 +77,20 @@ public class AnimalService {
         animalRepository.deleteById(animalId);
     }
 
+    public Image saveAnimalImage(Animal animal, Image image, InputStream inputStream) {
+        if (animal.getImage() != null) {
+            imageService.delete(animal.getImage());
+        }
+        image = imageService.save(image, inputStream);
+        animal.setImage(image);
+        animalRepository.saveAndFlush(animal);
+        return imageService.getImageJsonOrException(image.getId());
+    }
+
+    @Transactional
+    public void deleteAnimalImage(Animal animal) {
+        imageService.delete(animal.getImage());
+        animal.setImage(null);
+        animalRepository.save(animal);
+    }
 }
