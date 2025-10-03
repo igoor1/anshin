@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -41,4 +42,7 @@ public class Animal {
     @JoinColumn(name = "type_id")
     private AnimalType animalType;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "animal", cascade = CascadeType.REMOVE)
+    private Set<AnimalVaccine> vaccines;
 }

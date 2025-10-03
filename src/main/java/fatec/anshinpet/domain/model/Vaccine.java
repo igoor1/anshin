@@ -1,13 +1,12 @@
 package fatec.anshinpet.domain.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -20,6 +19,10 @@ public class Vaccine {
 
     private String name;
     private String manufacturer;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "vaccine")
+    public Set<AnimalVaccine> animals;
 
     @Override
     public boolean equals(Object o) {
