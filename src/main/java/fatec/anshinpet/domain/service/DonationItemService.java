@@ -54,7 +54,7 @@ public class DonationItemService {
         DonationItem donationItem = parseObject(item, DonationItem.class);
         donationItem.setDonation(donation);
         BeanUtils.copyProperties(donationItem, currentDonationItem, "id");
-        return parseObject(donationItem, DonationItemDTO.class);
+        return parseObject(currentDonationItem, DonationItemDTO.class);
     }
 
     @Transactional
