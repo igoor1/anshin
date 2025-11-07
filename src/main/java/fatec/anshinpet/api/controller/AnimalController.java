@@ -8,6 +8,7 @@ import fatec.anshinpet.api.dto.input.ImageInput;
 import fatec.anshinpet.domain.model.Image;
 import fatec.anshinpet.domain.service.AnimalService;
 import fatec.anshinpet.domain.service.ImageService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
@@ -47,13 +48,13 @@ public class AnimalController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public AnimalDTO createAnimal(@RequestBody AnimalInput animalInput) {
+    public AnimalDTO createAnimal(@RequestBody @Valid AnimalInput animalInput) {
         return animalService.create(animalInput);
     }
 
     @PutMapping("/{animalId}")
     @ResponseStatus(HttpStatus.OK)
-    public AnimalDTO updateAnimal (@PathVariable Long animalId, @RequestBody AnimalInput animal) {
+    public AnimalDTO updateAnimal (@PathVariable Long animalId, @RequestBody @Valid AnimalInput animal) {
         return animalService.update(animalId, animal);
     }
 
@@ -73,7 +74,7 @@ public class AnimalController {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(value = "/{animalId}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ImageDTO saveUserImage(@PathVariable Long animalId, ImageInput imageInput) throws IOException {
+    public ImageDTO saveUserImage(@PathVariable Long animalId, @Valid ImageInput imageInput) throws IOException {
         MultipartFile file = imageInput.getFile();
         var image = parseObject(imageInput, Image.class);
         image.setFileName(file.getOriginalFilename());

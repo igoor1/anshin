@@ -4,6 +4,7 @@ import fatec.anshinpet.api.dto.AnimalStatusDTO;
 import fatec.anshinpet.api.dto.input.StatusInput;
 import fatec.anshinpet.domain.model.AnimalStatus;
 import fatec.anshinpet.domain.service.AnimalStatusService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -31,13 +32,13 @@ public class AnimalStatusController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public AnimalStatusDTO createStatus(@RequestBody StatusInput statusInput) {
+    public AnimalStatusDTO createStatus(@RequestBody @Valid StatusInput statusInput) {
         return animalStatusService.create(statusInput);
     }
 
     @PutMapping("/{statusId}")
     @ResponseStatus(HttpStatus.OK)
-    public AnimalStatusDTO updateStatus(@PathVariable Long statusId, @RequestBody StatusInput status){
+    public AnimalStatusDTO updateStatus(@PathVariable Long statusId, @RequestBody @Valid StatusInput status){
         return animalStatusService.update(statusId, status);
     }
 

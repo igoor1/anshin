@@ -1,5 +1,7 @@
 package fatec.anshinpet.api.dto.input;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +11,12 @@ import java.time.LocalDate;
 @Setter
 public class DonationInput {
 
+    @PastOrPresent
     private LocalDate date;
-    private String Description;
+
+    @NotBlank
+    private String description;
+
+    @NotBlank
     private String type;
 }

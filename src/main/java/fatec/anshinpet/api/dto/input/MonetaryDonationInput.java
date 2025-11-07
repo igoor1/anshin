@@ -1,5 +1,7 @@
 package fatec.anshinpet.api.dto.input;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,6 +9,9 @@ import lombok.Setter;
 @Setter
 public class MonetaryDonationInput {
 
-    private double amount;
+    @Positive
+    private Double amount;
+
+    @NotNull
     private Long donationId;
 }

@@ -3,6 +3,7 @@ package fatec.anshinpet.api.controller;
 import fatec.anshinpet.api.dto.VaccineDTO;
 import fatec.anshinpet.api.dto.input.VaccineInput;
 import fatec.anshinpet.domain.service.VaccineService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -30,13 +31,13 @@ public class VaccineController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public VaccineDTO createVaccine(@RequestBody VaccineInput vaccineInput) {
+    public VaccineDTO createVaccine(@RequestBody @Valid VaccineInput vaccineInput) {
         return vaccineService.create(vaccineInput);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public VaccineDTO updateVaccine(@PathVariable Long id, @RequestBody VaccineInput vaccineInput) {
+    public VaccineDTO updateVaccine(@PathVariable Long id, @RequestBody @Valid VaccineInput vaccineInput) {
         return vaccineService.update(id, vaccineInput);
     }
 
