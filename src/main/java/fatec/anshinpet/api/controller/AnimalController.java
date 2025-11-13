@@ -66,7 +66,7 @@ public class AnimalController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{animalId}/image")
-    public ResponseEntity<InputStreamResource> getUserImage(
+    public ResponseEntity<InputStreamResource> getAnimalImage(
             @PathVariable Long animalId, @RequestHeader(name = "accept", defaultValue = "image/*") String acceptHeader) {
         var animal = animalService.findByIdOrException(animalId);
         return imageService.getImage(animal.getImage());
@@ -74,7 +74,7 @@ public class AnimalController {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(value = "/{animalId}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ImageDTO saveUserImage(@PathVariable Long animalId, @Valid ImageInput imageInput) throws IOException {
+    public ImageDTO saveAnimalImage(@PathVariable Long animalId, @Valid ImageInput imageInput) throws IOException {
         MultipartFile file = imageInput.getFile();
         var image = parseObject(imageInput, Image.class);
         image.setFileName(file.getOriginalFilename());

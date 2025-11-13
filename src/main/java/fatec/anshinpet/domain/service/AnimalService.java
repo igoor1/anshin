@@ -48,6 +48,13 @@ public class AnimalService {
         return parseObject(animal, AnimalDTO.class);
     }
 
+    public Page<AnimalDTO> findAvailable(Pageable pageable) {
+        Page<Animal> animalPage = animalRepository.findAvailableForAdoption(pageable);
+        List<Animal> animalList = animalPage.getContent();
+        List<AnimalDTO> animalDTO = parseListObjects(animalList, AnimalDTO.class);
+        return new PageImpl<>(animalDTO, pageable, animalPage.getTotalElements());
+    }
+
     @Transactional
     public AnimalDTO create(AnimalInput animalInput) {
         Animal animal = parseObject(animalInput, Animal.class);
@@ -93,4 +100,5 @@ public class AnimalService {
         animal.setImage(null);
         animalRepository.save(animal);
     }
+
 }

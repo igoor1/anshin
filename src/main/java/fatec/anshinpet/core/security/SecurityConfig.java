@@ -51,6 +51,11 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests( auth -> auth
+                        .requestMatchers(HttpMethod.GET,
+                                "/api/available",
+                                "/api/available/*",
+                                "/api/available/*/image"
+                        ).permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/auth/signin").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/suth/signup").hasRole("ADMIN")
                         .anyRequest().authenticated()
