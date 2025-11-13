@@ -3,6 +3,7 @@ package fatec.anshinpet.api.controller;
 import fatec.anshinpet.api.dto.DonationItemDTO;
 import fatec.anshinpet.api.dto.input.DonationItemInput;
 import fatec.anshinpet.domain.service.DonationItemService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -30,13 +31,13 @@ public class DonationItemController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public DonationItemDTO create(@RequestBody DonationItemInput itemInput) {
+    public DonationItemDTO create(@RequestBody @Valid DonationItemInput itemInput) {
         return  donationItemService.create(itemInput);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public DonationItemDTO update(@PathVariable Long id, @RequestBody DonationItemInput itemInput) {
+    public DonationItemDTO update(@PathVariable Long id, @RequestBody @Valid DonationItemInput itemInput) {
         return donationItemService.update(id, itemInput);
     }
 

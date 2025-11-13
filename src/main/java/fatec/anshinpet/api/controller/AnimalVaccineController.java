@@ -3,6 +3,7 @@ package fatec.anshinpet.api.controller;
 import fatec.anshinpet.api.dto.AnimalVaccineDTO;
 import fatec.anshinpet.api.dto.input.AnimalVaccineInput;
 import fatec.anshinpet.domain.service.AnimalVaccineService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -36,13 +37,13 @@ public class AnimalVaccineController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public AnimalVaccineDTO createAnimalVaccine(@RequestBody AnimalVaccineInput input) {
+    public AnimalVaccineDTO createAnimalVaccine(@RequestBody @Valid AnimalVaccineInput input) {
         return animalVaccineService.create(input);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AnimalVaccineDTO updateAnimalVaccine(@PathVariable Long id, @RequestBody AnimalVaccineInput input) {
+    public AnimalVaccineDTO updateAnimalVaccine(@PathVariable Long id, @RequestBody @Valid AnimalVaccineInput input) {
         return animalVaccineService.update(id, input);
     }
 

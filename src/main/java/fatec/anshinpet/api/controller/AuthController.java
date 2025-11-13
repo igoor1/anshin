@@ -7,6 +7,7 @@ import fatec.anshinpet.api.dto.input.UserInput;
 import fatec.anshinpet.domain.model.User;
 import fatec.anshinpet.domain.service.AuthService;
 import fatec.anshinpet.domain.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDTO signUp(@RequestBody UserInput userInput) {
+    public UserDTO signUp(@RequestBody @Valid UserInput userInput) {
         User user = parseObject(userInput, User.class);
         user = userService.create(user, userInput.getRole());
         return parseObject(user, UserDTO.class);
@@ -31,7 +32,7 @@ public class AuthController {
 
     @PostMapping("/signin")
     @ResponseStatus(HttpStatus.OK)
-    public AuthDTO signIn(@RequestBody SigninInput signinInput) {
+    public AuthDTO signIn(@RequestBody @Valid SigninInput signinInput) {
         return authService.authenticate(signinInput);
     }
 

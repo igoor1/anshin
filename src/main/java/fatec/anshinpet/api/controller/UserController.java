@@ -4,6 +4,7 @@ import fatec.anshinpet.api.dto.UserDTO;
 import fatec.anshinpet.api.dto.input.UserInput;
 import fatec.anshinpet.domain.model.User;
 import fatec.anshinpet.domain.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class UserController {
 
     @PutMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public UserDTO updateUser(@PathVariable Long userId, @RequestBody UserInput userInput) {
+    public UserDTO updateUser(@PathVariable Long userId, @RequestBody @Valid UserInput userInput) {
         return userService.update(userId, userInput);
     }
 

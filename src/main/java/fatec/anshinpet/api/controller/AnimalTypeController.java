@@ -4,6 +4,7 @@ package fatec.anshinpet.api.controller;
 import fatec.anshinpet.api.dto.AnimalTypeDTO;
 import fatec.anshinpet.api.dto.input.TypeInput;
 import fatec.anshinpet.domain.service.AnimalTypeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -31,13 +32,13 @@ public class AnimalTypeController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
-    public AnimalTypeDTO createType(@RequestBody TypeInput typeInput) {
+    public AnimalTypeDTO createType(@RequestBody @Valid TypeInput typeInput) {
         return animalTypeService.create(typeInput);
     }
 
     @PutMapping("/{typeId}")
     @ResponseStatus(HttpStatus.OK)
-    public AnimalTypeDTO updateType(@PathVariable Long typeId, @RequestBody TypeInput type) {
+    public AnimalTypeDTO updateType(@PathVariable Long typeId, @RequestBody @Valid TypeInput type) {
         return animalTypeService.update(typeId, type);
     }
 
