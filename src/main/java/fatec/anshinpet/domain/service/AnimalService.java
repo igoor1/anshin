@@ -84,6 +84,7 @@ public class AnimalService {
         animalRepository.deleteById(animalId);
     }
 
+    @Transactional
     public Image saveAnimalImage(Animal animal, Image image, InputStream inputStream) {
         if (animal.getImage() != null) {
             imageService.delete(animal.getImage());

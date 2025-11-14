@@ -15,6 +15,7 @@ import java.io.InputStream;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ImageService {
 
     private final ImageRepository imageRepository;
